@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Browse the LitBuy spreadsheet with real HipobuyFind listings, item IDs, CNY prices and approximate USD references. Compare costs and check sizing before ordering.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LitBuy spreadsheet | Product Finds &amp; Buying Guide">
+  <meta property="og:description" content="Filter shoes, hoodies, tees and more. Compare listed prices and check your estimated order total.">
+  <title>LitBuy spreadsheet | Product Finds &amp; Buying Guide</title>
+  <!--
+    Filename: index.html.
+    Search review: lit-buyfinds.com offers category and brand filters; litbuysheetx.com/shoes/
+    combines shoe listings with sizing guidance; litbuyex.com/shoes/ displays CNY and USD prices.
+    This page combines searchable source item IDs, static catalog rows and a landed-cost worksheet.
+    Google and Bing submission is pending a public deployment URL and verified site access.
+    After deployment, add a self-referencing canonical using the final URL, then submit
+    that URL through Google Search Console URL Inspection and Bing Webmaster Tools URL Submission.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "LitBuy spreadsheet",
+    "description": "An independent guide with selected HipobuyFind listings and an order-cost worksheet.",
+    "inLanguage": "en",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Black and Red Basketball Sneakers","url":"https://hipobuyfind.com/goods-149969.html"},
+        {"@type":"ListItem","position":2,"name":"Cream Chunky Sneakers with Wide Laces","url":"https://hipobuyfind.com/goods-148191.html"},
+        {"@type":"ListItem","position":3,"name":"Fleece-Lined Hoodie","url":"https://hipobuyfind.com/goods-154917.html"},
+        {"@type":"ListItem","position":4,"name":"Crewneck Sweatshirt","url":"https://hipobuyfind.com/goods-154916.html"},
+        {"@type":"ListItem","position":5,"name":"Graphic Short-Sleeve T-Shirt","url":"https://hipobuyfind.com/goods-154920.html"},
+        {"@type":"ListItem","position":6,"name":"Short-Sleeve T-Shirt","url":"https://hipobuyfind.com/goods-154919.html"},
+        {"@type":"ListItem","position":7,"name":"Lightweight Puffer Jacket","url":"https://hipobuyfind.com/goods-152572.html"},
+        {"@type":"ListItem","position":8,"name":"Shorts","url":"https://hipobuyfind.com/goods-152251.html"}
+      ]
+    }
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink:#f1f5ef;
+      --muted:#acbeb6;
+      --background:#0c1513;
+      --panel:#14221e;
+      --line:#30463d;
+      --accent:#c9fa95;
+      --radius:1.25rem;
+      font-family:"Instrument Sans",system-ui,sans-serif;
+    }
+    * {box-sizing:border-box}
+    body {margin:0;background:var(--background);color:var(--ink);line-height:1.6}
+    a {color:var(--accent);text-underline-offset:.22em}
+    a:hover {text-decoration-thickness:.16em}
+    :focus-visible {outline:3px solid var(--accent);outline-offset:4px}
+    .shell {width:min(70rem,calc(100% - 2rem));margin-inline:auto}
+    header {border-bottom:1px solid var(--line)}
+    nav {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-block:1rem}
+    nav a {text-decoration:none}
+    nav div {display:flex;flex-wrap:wrap;gap:1rem}
+    .brand {font-weight:800;color:var(--ink)}
+    .hero {
+      margin-block:2rem 3rem;
+      padding:clamp(2.5rem,8vw,6rem) 1rem;
+      text-align:center;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:radial-gradient(ellipse at 50% 0%,#345a38,#14221e 70%);
+    }
+    h1,h2,h3 {line-height:1.12;margin:0 0 .6em}
+    h1 {font-size:clamp(2.35rem,8vw,5.5rem);letter-spacing:-.06em}
+    h2 {font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.035em}
+    p {margin:.5rem 0 1rem}
+    .hero p {max-width:39rem;margin:0 auto 1.5rem;color:var(--muted)}
+    .actions {display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}
+    .button,button {display:inline-block;padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--accent);font:inherit;font-weight:750;cursor:pointer;text-decoration:none}
+    .primary,button {background:var(--accent);color:#142014}
+    .secondary {color:var(--accent);background:var(--background)}
+    section {margin-bottom:2.7rem;scroll-margin-top:1rem}
+    .muted,footer {color:var(--muted)}
+    .filters {display:flex;flex-wrap:wrap;gap:.8rem;margin:1rem 0}
+    .filters label {flex:1 1 13rem}
+    label {display:block;font-weight:650}
+    input,select {display:block;width:100%;padding:.55rem .65rem;margin-top:.25rem;border:1px solid var(--line);border-radius:.5rem;background:var(--background);color:var(--ink);font:inherit}
+    .table-wrap {overflow:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+    table {width:100%;border-collapse:collapse;min-width:36rem}
+    caption {text-align:left;padding:.7rem 1rem;color:var(--muted)}
+    th,td {padding:.65rem .85rem;text-align:left;border-top:1px solid var(--line)}
+    th[scope=row] {font-weight:650}
+    thead {background:#20332a}
+    .number {white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+    .grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:1rem}
+    .panel {background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.25rem}
+    .cost-fields {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.8rem;margin:1rem 0}
+    output {display:block;margin-top:1rem;color:var(--accent);font-weight:750}
+    details {padding:.8rem 0;border-top:1px solid var(--line)}
+    summary {cursor:pointer;font-weight:700}
+    footer {border-top:1px solid var(--line);padding:1.2rem 0}
+    [hidden] {display:none!important}
+  </style>
+<link rel="canonical" href="https://kakobuyfinds.github.io/hoebb/">
+</head>
+<body>
+  <header>
+    <nav class="shell" aria-label="Main navigation">
+      <a class="brand" href="#top">LitBuy spreadsheet</a>
+      <div>
+        <a href="#catalog">Catalog</a>
+        <a href="#cost">Order estimate</a>
+        <a href="#guide">Buying guide</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="shell" id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <h1 id="page-title">LitBuy spreadsheet</h1>
+      <p>Browse selected HipobuyFind listings, compare item prices and build an order estimate before choosing a shipping route.</p>
+      <div class="actions">
+        <a class="button primary" href="https://hipobuyfind.com">LitBuy spreadsheet</a>
+        <a class="button secondary" href="https://hipobuyfind.com">Buy it now</a>
+      </div>
+    </section>
+
+    <section id="catalog" aria-labelledby="catalog-title">
+      <h2 id="catalog-title">Product catalog</h2>
+      <p class="muted">Prices are a snapshot from <a href="https://hipobuyfind.com">HipobuyFind</a>. USD figures are approximate and cover the item price only. Open a listing to confirm the current price and available options.</p>
+      <div class="filters" id="filters" hidden>
+        <label for="query">Search by product or item ID
+          <input id="query" type="search" placeholder="Try hoodie or 154917" autocomplete="off">
+        </label>
+        <label for="category">Category
+          <select id="category">
+            <option value="">All categories</option>
+            <option>Shoes</option>
+            <option>Hoodies &amp; sweaters</option>
+            <option>T-shirts</option>
+            <option>Jackets</option>
+            <option>Pants &amp; shorts</option>
+          </select>
+        </label>
+      </div>
+      <p id="result-count" role="status" hidden></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="catalog-title">
+        <table>
+          <caption>Selected listings and reference prices</caption>
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Category</th>
+              <th scope="col">Item ID</th>
+              <th scope="col" class="number">CNY</th>
+              <th scope="col" class="number">Approx. USD</th>
+            </tr>
+          </thead>
+          <tbody id="products">
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-149969.html">Black and Red Basketball Sneakers</a></th>
+              <td>Shoes</td><td>149969</td><td class="number">¥145.00</td><td class="number">$20.14</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-148191.html">Cream Chunky Sneakers with Wide Laces</a></th>
+              <td>Shoes</td><td>148191</td><td class="number">¥350.00</td><td class="number">$48.61</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-154917.html">Fleece-Lined Hoodie</a></th>
+              <td>Hoodies &amp; sweaters</td><td>154917</td><td class="number">¥170.00</td><td class="number">$23.61</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-154916.html">Crewneck Sweatshirt</a></th>
+              <td>Hoodies &amp; sweaters</td><td>154916</td><td class="number">¥150.00</td><td class="number">$20.83</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-154920.html">Graphic Short-Sleeve T-Shirt</a></th>
+              <td>T-shirts</td><td>154920</td><td class="number">¥105.00</td><td class="number">$14.58</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-154919.html">Short-Sleeve T-Shirt</a></th>
+              <td>T-shirts</td><td>154919</td><td class="number">¥105.00</td><td class="number">$14.58</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-152572.html">Lightweight Puffer Jacket</a></th>
+              <td>Jackets</td><td>152572</td><td class="number">¥268.00</td><td class="number">$37.22</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://hipobuyfind.com/goods-152251.html">Shorts</a></th>
+              <td>Pants &amp; shorts</td><td>152251</td><td class="number">¥104.40</td><td class="number">$14.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="cost" class="panel" aria-labelledby="cost-title">
+      <h2 id="cost-title">Estimate your order total</h2>
+      <p id="cost-help" class="muted">Add the item subtotal, domestic delivery, international shipping and any fees or taxes you expect to pay. Enter all amounts in CNY. Use zero for a charge only when it does not apply.</p>
+      <form id="cost-form" aria-describedby="cost-help" hidden>
+        <div class="cost-fields">
+          <label>Item subtotal (CNY)
+            <input name="items" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" required>
+          </label>
+          <label>Domestic delivery (CNY)
+            <input name="domestic" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Enter quote or 0" required>
+          </label>
+          <label>International shipping (CNY)
+            <input name="international" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Enter quote or 0" required>
+          </label>
+          <label>Fees and taxes (CNY)
+            <input name="fees" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Enter estimate or 0" required>
+          </label>
+        </div>
+        <button type="submit">Calculate total</button>
+        <output id="total" aria-live="polite"></output>
+      </form>
+    </section>
+
+    <section id="guide" aria-labelledby="guide-title">
+      <h2 id="guide-title">How to use the LitBuy spreadsheet</h2>
+      <div class="grid">
+        <article class="panel">
+          <h3>Match the listing and variant</h3>
+          <p>Open the HipobuyFind listing and match the item ID before comparing prices. Check the seller’s options for your specific color and size. If the page offers a LitBuy link under Buy Link, open it and confirm that it points to the same item.</p>
+        </article>
+        <article class="panel">
+          <h3>Check measurements and photos</h3>
+          <p>Compare a seller’s garment measurements with a similar item you already own. For shoes, check whether the seller’s chart uses foot length or insole length. If warehouse photos are available, check that the color, labels and size match your order.</p>
+        </article>
+        <article class="panel">
+          <h3>Compare shipping on the same basis</h3>
+          <p>Use the same destination, parcel contents and packaging for each quote. Ask which weight the route charges for and whether the quote includes the fees you expect to pay. Compare totals after adding delivery and service charges.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq-title">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <details>
+        <summary>Where do the spreadsheet listings come from?</summary>
+        <p>The products, item IDs and reference prices come from HipobuyFind’s public catalog. Each product name opens its original listing.</p>
+      </details>
+      <details>
+        <summary>Why might the USD amount differ at checkout?</summary>
+        <p>The spreadsheet shows approximate USD amounts from the catalog snapshot. The selected variant, exchange rate and payment charges can change the amount due.</p>
+      </details>
+      <details>
+        <summary>What should I do if a product link no longer works?</summary>
+        <p>Search HipobuyFind using the item ID or product name. If you find a similar listing, compare the measurements, photos, price and seller options before switching.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">Independent LitBuy shopping guide · Catalog source: <a href="https://hipobuyfind.com">HipobuyFind</a></div>
+  </footer>
+
+  <script>
+    const filters = document.getElementById('filters');
+    const query = document.getElementById('query');
+    const category = document.getElementById('category');
+    const rows = Array.from(document.querySelectorAll('#products tr'));
+    const resultCount = document.getElementById('result-count');
+
+    function filterProducts() {
+      const terms = query.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      let count = 0;
+
+      for (const row of rows) {
+        const rowCategory = row.cells[1].textContent.trim();
+        const searchable = [row.cells[0], row.cells[1], row.cells[2]]
+          .map(cell => cell.textContent.toLowerCase())
+          .join(' ');
+        const matchesCategory = !category.value || category.value === rowCategory;
+        const matchesQuery = terms.every(term => searchable.includes(term));
+        row.hidden = !(matchesCategory && matchesQuery);
+        if (!row.hidden) count += 1;
+      }
+
+      resultCount.textContent = count === 0
+        ? 'No matching products. Try another term or category.'
+        : `Showing ${count} of ${rows.length} products.`;
+    }
+
+    query.addEventListener('input', filterProducts);
+    category.addEventListener('change', filterProducts);
+    filters.hidden = false;
+    resultCount.hidden = false;
+    filterProducts();
+
+    const costForm = document.getElementById('cost-form');
+    const total = document.getElementById('total');
+    const formatCny = new Intl.NumberFormat('en', {style:'currency', currency:'CNY'});
+
+    costForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const amounts = new FormData(costForm);
+      let cents = 0;
+      for (const amount of amounts.values()) {
+        cents += Math.round(Number(amount) * 100);
+      }
+      total.textContent = `Estimated total: ${formatCny.format(cents / 100)} CNY`;
+    });
+
+    costForm.addEventListener('input', () => {
+      total.textContent = '';
+    });
+
+    costForm.hidden = false;
+  </script>
+</body>
+</html>
